@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Технологии{% endblock %}
+{% block content %}
+{% comment %} Колонки с отступом сверху и снизу {% endcomment %}
+<div class="container py-5">
+<div class="row">
+  <h1>Используемые технологии</h1>
+  {% comment %}
+    Боковой блок со списком технологий 
+    Займет всю ширину блока на мобильном
+    и 25% при размерах экрана ≥768px
+  {% endcomment %}
+  <p></p>
+  <aside class="col-12 col-md-3">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        Python
+      </li>
+      <li class="list-group-item">
+        Django
+      </li>
+      <li class="list-group-item">
+        VS Code
+      </li>
+    </ul>
+  </aside>
+  {% comment %}
+    Статья  
+    Займет всю ширину блока на мобильном
+    и 75% при размерах экрана ≥768px
+  {% endcomment %}
+  <article class="col-12 col-md-9">
+    <p>Работаю на макбуке, на который со скрипом натянута 11 винда, но так даже интереснее. 
+      Иногда переключаюсь между MacOS и Windows, делаю задания проекта два раза, тем самым закрепляя материал.
+    </p>
+  </article>
+</div>
+</div>
+{% endblock %}
