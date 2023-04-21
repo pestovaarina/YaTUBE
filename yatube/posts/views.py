@@ -10,14 +10,18 @@ SLICE: int = 30
 POSTS_ON_PAGE: int = 10
 
 
+def paginator_obj(request, post_list):
+    paginator = Paginator(post_list, POSTS_ON_PAGE)
+    page_number = request.GET.get('page')
+    return paginator.get_page(page_number)
+
+
 def index(request):
     """Главная страница."""
     template = 'posts/index.html'
     title = 'Это главная страница проекта Yatube'
     post_list = Post.objects.all()
-    paginator = Paginator(post_list, POSTS_ON_PAGE)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    page_obj = paginator_obj(request, post_list)
     context = {
         'title': title,
         'page_obj': page_obj,
@@ -29,9 +33,7 @@ def group_posts(request, slug):
     """Страница с записями сообществ."""
     group = get_object_or_404(Group, slug=slug)
     post_list = group.posts.all()
-    paginator = Paginator(post_list, POSTS_ON_PAGE)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    page_obj = paginator_obj(request, post_list)
     template = 'posts/group_list.html'
     title = f'Записи сообщества {group.title}'
     context = {
@@ -48,9 +50,7 @@ def profile(request, username):
     title = f'Профайл пользователя {username}'
     post_list = Post.objects.filter(author=users_profile)
     post_count = post_list.count()
-    paginator = Paginator(post_list, POSTS_ON_PAGE)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    page_obj = paginator_obj(request, post_list)
     following = request.user.is_authenticated and Follow.objects.filter(
         user=request.user,
         author=users_profile
@@ -144,9 +144,7 @@ def follow_index(request):
     post_list = Post.objects.filter(
         author__following__user=request.user
     )
-    paginator = Paginator(post_list, POSTS_ON_PAGE)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    page_obj = paginator_obj(request, post_list)
     context = {
         'page_obj': page_obj,
     }

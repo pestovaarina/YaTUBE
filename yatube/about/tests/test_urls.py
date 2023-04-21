@@ -4,7 +4,6 @@ from http import HTTPStatus
 
 class StaticPagesURLTests(TestCase):
     def setUp(self):
-        # Создаем неавторизованый клиент
         self.guest_client = Client()
 
     def test_about_url(self):
